@@ -351,6 +351,10 @@ class Platform:
         return (current_capability.to_int() // 10) == (capability // 10)
 
     @classmethod
+    def is_blackwell_class(cls, device_id: int = 0) -> bool:
+        return False
+
+    @classmethod
     def get_device_name(cls, device_id: int = 0) -> str:
         """Get the name of a device."""
         raise NotImplementedError

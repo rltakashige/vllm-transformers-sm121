@@ -256,7 +256,7 @@ class CacheConfig:
                     "on NVIDIA CUDA platforms. Please do not specify  "
                     "`--enable-mamba-cache-stochastic-rounding`."
                 )
-            if not current_platform.is_device_capability_family(100):
+            if not current_platform.is_blackwell_class():
                 raise ValueError(
                     "Stochastic rounding for Mamba cache requires compute "
                     "capability 10.0 (data center Blackwell). The `cvt.rs` PTX "

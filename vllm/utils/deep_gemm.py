@@ -37,7 +37,7 @@ def should_auto_disable_deep_gemm(model_type: str | None) -> bool:
     """
     if model_type is None:
         return False
-    if not current_platform.is_device_capability_family(100):
+    if not current_platform.is_blackwell_class():
         return False
     return model_type in _DEEPGEMM_BLACKWELL_EXCLUDED_MODEL_TYPES
 
@@ -71,7 +71,7 @@ class DeepGemmQuantScaleFMT(Enum):
 
         cls._oracle_cache = (  # type: ignore
             cls.UE8M0
-            if current_platform.is_device_capability_family(100)
+            if current_platform.is_blackwell_class()
             else cls.FLOAT32_CEIL_UE8M0
         )
 

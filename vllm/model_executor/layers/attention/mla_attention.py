@@ -1294,7 +1294,7 @@ def use_flashinfer_prefill() -> bool:
         not vllm_config.attention_config.disable_flashinfer_prefill
         and has_flashinfer()
         and not vllm_config.attention_config.use_cudnn_prefill
-        and current_platform.is_device_capability_family(100)
+        and current_platform.is_blackwell_class()
     ):
         return False
 
@@ -1309,7 +1309,7 @@ def use_cudnn_prefill() -> bool:
     return (
         has_flashinfer()
         and vllm_config.attention_config.use_cudnn_prefill
-        and current_platform.is_device_capability_family(100)
+        and current_platform.is_blackwell_class()
         and has_nvidia_artifactory()
     )
 
@@ -1323,7 +1323,7 @@ def use_trtllm_ragged_deepseek_prefill() -> bool:
     if not (
         has_flashinfer()
         and vllm_config.attention_config.use_trtllm_ragged_deepseek_prefill
-        and current_platform.is_device_capability_family(100)
+        and current_platform.is_blackwell_class()
     ):
         return False
 
@@ -1366,7 +1366,7 @@ def backend_supports_prefill_query_quantization() -> bool:
     """
     # FP8 prefill query quantization requires GB200 (device capability 100)
     # for the necessary FP8 kernels at the moment.
-    if not current_platform.is_device_capability_family(100):
+    if not current_platform.is_blackwell_class():
         return False
 
     return use_flashinfer_prefill() or use_trtllm_ragged_deepseek_prefill()

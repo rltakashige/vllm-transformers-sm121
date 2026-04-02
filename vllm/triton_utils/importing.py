@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
+import shutil
 import types
 from importlib.util import find_spec
 
 from vllm.logger import init_logger
 
 logger = init_logger(__name__)
+
+if not os.environ.get("TRITON_PTXAS_PATH"):
+    ptxas = shutil.which("ptxas")
+    if ptxas:
+        os.environ["TRITON_PTXAS_PATH"] = ptxas
 
 HAS_TRITON = (
     find_spec("triton") is not None

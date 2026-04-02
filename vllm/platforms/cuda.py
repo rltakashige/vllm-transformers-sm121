@@ -193,6 +193,13 @@ class CudaPlatformBase(Platform):
         raise NotImplementedError
 
     @classmethod
+    def is_blackwell_class(cls, device_id: int = 0) -> bool:
+        capability = cls.get_device_capability(device_id=device_id)
+        if capability is None:
+            return False
+        return capability.major in (10, 11, 12)
+
+    @classmethod
     def get_device_name(cls, device_id: int = 0) -> str:
         raise NotImplementedError
 
@@ -542,7 +549,7 @@ class CudaPlatformBase(Platform):
     @classmethod
     def support_deep_gemm(cls) -> bool:
         """Currently, only Hopper and Blackwell GPUs are supported."""
-        return cls.is_device_capability(90) or cls.is_device_capability_family(100)
+        return cls.is_device_capability(90) or cls.is_blackwell_class()
 
     @classmethod
     def num_compute_units(cls, device_id: int = 0) -> int:

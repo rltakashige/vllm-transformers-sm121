@@ -276,7 +276,7 @@ class FlashMLASparseMetadataBuilder(AttentionMetadataBuilder[FlashMLASparseMetad
         # For max buffer size, use s_q = 1 (the case that produces largest output)
         # Use padded head count since that's what will be passed to the kernel
         h_q = self.fp8_decode_padded_heads
-        if current_platform.is_device_capability_family(100):
+        if current_platform.is_blackwell_class():
             # SM100 head64 or head64x2 uses full SM count
             max_num_sm_parts = sm_count
         else:
@@ -565,7 +565,7 @@ class FlashMLASparseImpl(SparseMLAAttentionImpl[FlashMLASparseMetadata]):
         self.topk_indices_buffer: torch.Tensor | None = indexer.topk_indices_buffer
         # Prefill BF16 kernel requires 64 on Hopper, 128 on Blackwell
         self.prefill_padding = (
-            128 if current_platform.is_device_capability_family(100) else 64
+            128 if current_platform.is_blackwell_class() else 64
         )
         self.fp8_decode_padded_heads = self._compute_fp8_decode_padded_heads(num_heads)
 
