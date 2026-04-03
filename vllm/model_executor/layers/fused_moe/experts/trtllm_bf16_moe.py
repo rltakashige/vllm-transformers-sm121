@@ -48,7 +48,7 @@ class TrtLlmBf16Experts(mk.FusedMoEExpertsMonolithic):
         p = current_platform
         return (
             p.is_cuda()
-            and p.is_blackwell_class()
+            and p.is_device_capability_family(100)
             and has_flashinfer_trtllm_fused_moe()
         )
 

@@ -292,7 +292,7 @@ def select_mxfp4_moe_backend(
                     None,
                     activation_format,
                 )
-            if current_platform.is_blackwell_class():
+            if current_platform.is_device_capability_family(100):
                 return _return_or_raise(
                     Mxfp4MoeBackend.FLASHINFER_TRTLLM_MXFP4_BF16,
                     config,
