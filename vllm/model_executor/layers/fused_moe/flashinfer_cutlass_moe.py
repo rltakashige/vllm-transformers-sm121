@@ -165,7 +165,7 @@ class FlashInferExperts(mk.FusedMoEExpertsModular):
                     (kMxfp4Static, None),
                     (kFp8Static128BlockSym, kFp8Dynamic128Sym),
                 ]
-                and (p.is_device_capability(90) or p.is_blackwell_class())
+                and p.is_device_capability(90)
             )
             # wmxfp4amxfp8 on 10.0+
             or (
